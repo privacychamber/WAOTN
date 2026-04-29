@@ -1,29 +1,27 @@
 @import "tailwindcss";
 
-/* 
- * In Tailwind v4, we can define root variables and standard CSS
- * Since we want a robust Light/Dark mode, we define our custom colors 
- * and then use standard Tailwind utility classes like dark:bg-bg-dark
- */
-
 @theme {
-  /* Brand colors */
+  /* Brand fonts */
+  --font-sans: 'Sora', sans-serif;
+  --font-display: 'Orbitron', sans-serif;
+
+  /* Brand colors from Kit */
   --color-brand-blue: #4A7DFF;
-  --color-brand-purple: #8B5CF6;
-  --color-brand-cyan: #22D3EE;
+  --color-brand-deep: #1B3A92;
+  --color-brand-cyan: #00FFFF;
+  --color-brand-dark: #000000;
+  --color-brand-gray: #9CA3AF;
   
   /* Light theme */
   --color-bg-light: #F7F8FA;
   --color-surface-light: #ffffff;
   --color-text-light: #111827;
-  --color-text-muted-light: #4B5563;
   --color-border-light: #E5E7EB;
   
   /* Dark theme */
-  --color-bg-dark: #0B0F19;
-  --color-surface-dark: #1E293B;
+  --color-bg-dark: #000000;
+  --color-surface-dark: #0B0F19;
   --color-text-dark: #ffffff;
-  --color-text-muted-dark: #9CA3AF;
   --color-border-dark: rgba(255, 255, 255, 0.1);
 
   --animate-blob: blob 7s infinite;
@@ -43,34 +41,45 @@
 }
 
 @layer base {
+  html, body {
+    overflow-x: hidden;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  
   body {
-    @apply bg-bg-light text-text-light transition-colors duration-500 ease-in-out font-sans antialiased overflow-x-hidden selection:bg-brand-blue selection:text-white;
+    @apply bg-bg-light text-text-light transition-colors duration-500 ease-in-out font-sans antialiased selection:bg-brand-blue selection:text-white;
   }
   
   .dark body {
     @apply bg-bg-dark text-text-dark;
   }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display;
+  }
 }
 
 @layer utilities {
   .glass {
-    @apply bg-white/50 dark:bg-surface-dark/30 backdrop-blur-md border border-border-light dark:border-border-dark shadow-sm dark:shadow-[0_4px_30px_rgba(0,0,0,0.1)];
+    @apply bg-white/50 dark:bg-surface-dark/60 backdrop-blur-md border border-border-light dark:border-brand-deep/30 shadow-sm dark:shadow-[0_4px_30px_rgba(0,0,0,0.5)];
   }
   
   .glass-card {
-    @apply bg-white/70 dark:bg-surface-dark/40 backdrop-blur-lg border border-border-light dark:border-border-dark rounded-2xl shadow-xl transition-all duration-300;
+    @apply bg-white/70 dark:bg-surface-dark/80 backdrop-blur-lg border border-border-light dark:border-brand-deep/50 rounded-2xl shadow-xl transition-all duration-300;
   }
   
   .text-gradient {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-brand-blue via-brand-purple to-brand-cyan;
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-brand-blue via-brand-cyan to-white;
   }
   
   .bg-gradient-mesh {
     background-color: var(--color-bg-dark);
     background-image: 
-      radial-gradient(at 0% 0%, var(--color-brand-blue) 0px, transparent 50%),
-      radial-gradient(at 100% 0%, var(--color-brand-purple) 0px, transparent 50%),
-      radial-gradient(at 100% 100%, var(--color-brand-cyan) 0px, transparent 50%),
+      radial-gradient(at 0% 0%, var(--color-brand-deep) 0px, transparent 40%),
+      radial-gradient(at 100% 0%, var(--color-brand-blue) 0px, transparent 40%),
+      radial-gradient(at 100% 100%, var(--color-brand-cyan) 0px, transparent 30%),
       radial-gradient(at 0% 100%, var(--color-surface-dark) 0px, transparent 50%);
     background-size: 100% 100%;
     background-repeat: no-repeat;
