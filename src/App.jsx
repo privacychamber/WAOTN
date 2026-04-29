@@ -1,4 +1,7 @@
 import React from 'react';
+import { ThemeProvider } from './context/ThemeContext';
+import SmoothScroll from './components/SmoothScroll';
+import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import About from './components/About';
 import Services from './components/Services';
@@ -10,17 +13,21 @@ import Footer from './components/Footer';
 
 function App() {
   return (
-    <div className="min-h-screen bg-brand-dark selection:bg-brand-blue/30 text-white font-sans overflow-hidden">
-      {/* Global cursor-follow light effect placeholder (could be implemented with JS, but CSS radial is enough for structural feel) */}
-      <Hero />
-      <About />
-      <Services />
-      <FeatureSplit />
-      <Process />
-      <Testimonials />
-      <FinalCTA />
-      <Footer />
-    </div>
+    <ThemeProvider>
+      <SmoothScroll>
+        <div className="relative selection:bg-brand-blue/30 overflow-hidden">
+          <Navbar />
+          <Hero />
+          <About />
+          <Services />
+          <FeatureSplit />
+          <Process />
+          <Testimonials />
+          <FinalCTA />
+          <Footer />
+        </div>
+      </SmoothScroll>
+    </ThemeProvider>
   );
 }
 

@@ -1,12 +1,31 @@
 @import "tailwindcss";
 
+/* 
+ * In Tailwind v4, we can define root variables and standard CSS
+ * Since we want a robust Light/Dark mode, we define our custom colors 
+ * and then use standard Tailwind utility classes like dark:bg-bg-dark
+ */
+
 @theme {
+  /* Brand colors */
   --color-brand-blue: #4A7DFF;
   --color-brand-purple: #8B5CF6;
   --color-brand-cyan: #22D3EE;
-  --color-brand-dark: #0F172A;
-  --color-brand-slate: #1E293B;
-  --color-brand-light: #F7F8FA;
+  
+  /* Light theme */
+  --color-bg-light: #F7F8FA;
+  --color-surface-light: #ffffff;
+  --color-text-light: #111827;
+  --color-text-muted-light: #4B5563;
+  --color-border-light: #E5E7EB;
+  
+  /* Dark theme */
+  --color-bg-dark: #0B0F19;
+  --color-surface-dark: #1E293B;
+  --color-text-dark: #ffffff;
+  --color-text-muted-dark: #9CA3AF;
+  --color-border-dark: rgba(255, 255, 255, 0.1);
+
   --animate-blob: blob 7s infinite;
   --animate-glow: glow 3s ease-in-out infinite alternate;
 }
@@ -25,17 +44,21 @@
 
 @layer base {
   body {
-    @apply bg-brand-dark text-white font-sans antialiased overflow-x-hidden selection:bg-brand-blue selection:text-white;
+    @apply bg-bg-light text-text-light transition-colors duration-500 ease-in-out font-sans antialiased overflow-x-hidden selection:bg-brand-blue selection:text-white;
+  }
+  
+  .dark body {
+    @apply bg-bg-dark text-text-dark;
   }
 }
 
 @layer utilities {
   .glass {
-    @apply bg-brand-slate/30 backdrop-blur-md border border-white/10 shadow-[0_4px_30px_rgba(0,0,0,0.1)];
+    @apply bg-white/50 dark:bg-surface-dark/30 backdrop-blur-md border border-border-light dark:border-border-dark shadow-sm dark:shadow-[0_4px_30px_rgba(0,0,0,0.1)];
   }
   
   .glass-card {
-    @apply bg-brand-slate/40 backdrop-blur-lg border border-white/5 rounded-2xl shadow-xl transition-all duration-300;
+    @apply bg-white/70 dark:bg-surface-dark/40 backdrop-blur-lg border border-border-light dark:border-border-dark rounded-2xl shadow-xl transition-all duration-300;
   }
   
   .text-gradient {
@@ -43,13 +66,24 @@
   }
   
   .bg-gradient-mesh {
-    background-color: #0F172A;
+    background-color: var(--color-bg-dark);
     background-image: 
-      radial-gradient(at 0% 0%, #4A7DFF 0px, transparent 50%),
-      radial-gradient(at 100% 0%, #8B5CF6 0px, transparent 50%),
-      radial-gradient(at 100% 100%, #22D3EE 0px, transparent 50%),
-      radial-gradient(at 0% 100%, #1E293B 0px, transparent 50%);
+      radial-gradient(at 0% 0%, var(--color-brand-blue) 0px, transparent 50%),
+      radial-gradient(at 100% 0%, var(--color-brand-purple) 0px, transparent 50%),
+      radial-gradient(at 100% 100%, var(--color-brand-cyan) 0px, transparent 50%),
+      radial-gradient(at 0% 100%, var(--color-surface-dark) 0px, transparent 50%);
     background-size: 100% 100%;
     background-repeat: no-repeat;
+  }
+  
+  /* Hide scrollbar for smooth scroll feel */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    @apply bg-bg-light dark:bg-bg-dark;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-gray-300 dark:bg-gray-700 rounded-full;
   }
 }
