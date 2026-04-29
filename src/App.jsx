@@ -10,7 +10,8 @@ import Footer from './components/Footer';
 
 function App() {
   return (
-    <div className="app">
+    <div className="min-h-screen bg-brand-dark selection:bg-brand-blue/30 text-white font-sans overflow-hidden">
+      {/* Global cursor-follow light effect placeholder (could be implemented with JS, but CSS radial is enough for structural feel) */}
       <Hero />
       <About />
       <Services />
